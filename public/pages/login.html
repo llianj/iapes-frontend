@@ -1,23 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
-    <body>
-    
-        <form id="loginForm">
-            <input type="email" id="loginEmail" placeholder="email" required><br><br>
-            <input type="password" id="loginPassword" placeholder="senha" required><br><br>
-            <button type="submit">Login</button>
-        </form>
-        <a href="cadastro.html">Cadastre-se</a>
+    <title>Login - Portal do Aluno</title>
+    <link rel="stylesheet" href="./csspages/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    <style>
+        /* Wrapper para o campo de senha com botão de toggle */
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .password-wrapper .formulario_caixa {
+            width: 80%;
+            padding-right: 0px; /* espaço pro botão */
+        }
+        .toggle-pw-btn {
+            position: absolute;
+            right: 120px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #7a7f9a;
+            font-size: 0.9rem;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+        .toggle-pw-btn:hover {
+            color: #c0c8e0;
+        }
+    </style>
+</head> 
+<body>
 
-    
-        <pre id="output"></pre>
+    <div id="container_esquerdo">
+        <div id="container_login">
 
-        <script type="module" src="../js/pages/login.js"></script>
+            <h1>Portal do Aluno</h1>
+            <div id="errorMessage" class="error-message"></div>
+            <p class="textos">Entre com seu Registro Acadêmico e senha para ter acesso ao portal.</p>
 
-    </body> 
+            <div class="texto_especial">
+                <p>Para continuar, efetue login!</p>
+            </div>
+
+            <form id="loginForm">
+
+                <p class="textos">E-mail institucional</p>
+                <input type="email" id="loginEmail" placeholder="aluno@iespes.edu.br" required class="formulario_caixa"><br>
+
+
+                <!-- fun fact: o botao de senha (a parte de ver) ta bugado -->
+                <p class="textos">Senha</p>
+                <div class="password-wrapper">
+                    <input type="password" id="loginPassword" placeholder="******" required class="formulario_caixa">
+                    <button type="button" class="toggle-pw-btn" id="toggleLoginPw" aria-label="Mostrar senha">
+                        <i class="fa-solid fa-eye" id="toggleLoginPwIcon"></i>
+                    </button>
+                </div>
+                <br>
+
+                <button type="submit" class="botao_login">Entrar</button>
+            </form>
+
+            <a href="cadastro.html" class="botao_cadastro">Cadastre-se</a>
+
+            <br><br>
+            <hr>
+            <br>
+            <p class="textos2">Projeto Desenvolvido pelos alunos de Redes de Computadores do IESPES</p>
+
+        </div>
+    </div>
+
+    <div id="container_direito">
+        <img src="./assets/loginfoto.jpg" alt="Imagem de Login" id="foto_login">
+    </div>
+
+    <pre id="output"></pre>
+
+    <script>
+        const toggleBtn  = document.getElementById('toggleLoginPw');
+        const toggleIcon = document.getElementById('toggleLoginPwIcon');
+        const pwField    = document.getElementById('loginPassword');
+
+        toggleBtn.addEventListener('click', () => {
+            const show = pwField.type === 'password';
+            pwField.type = show ? 'text' : 'password';
+            toggleIcon.className = show ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
+        });
+    </script>
+
+    <script type="module" src="../js/pages/login.js"></script>
+
+</body> 
 </html>

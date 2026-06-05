@@ -2,6 +2,7 @@ import { loginUser } from "../services/auth.service.js"
 
 const form = document.querySelector("#loginForm")
 const output = document.querySelector("#output")
+const errorMessage = document.querySelector("#errorMessage")
 
 function log(data) {
     if (output) {
@@ -9,8 +10,25 @@ function log(data) {
     }
 }
 
+function showError(message) {
+    errorMessage.textContent = message;
+    errorMessage.classList.add("show");
+    
+    // Remove a mensagem após 5 segundos
+    setTimeout(() => {
+        errorMessage.classList.remove("show");
+    }, 5000);
+}
+
+function hideError() {
+    errorMessage.classList.remove("show");
+}
+ 
+
+
 form.addEventListener("submit", async (event) => {
     event.preventDefault()
+    hideError()
 
     const email = document.querySelector("#loginEmail").value
     const password = document.querySelector("#loginPassword").value
@@ -23,6 +41,7 @@ form.addEventListener("submit", async (event) => {
             log({
                 error: data.error
             })
+            showError(data.error || "Usuário ou senha incorretos");
             return
         }
 
@@ -33,9 +52,7 @@ form.addEventListener("submit", async (event) => {
         //Redirect
         window.location.href = "/pages/dashboard.html"
     } catch (err) {
-        log({
-            error: err.message || "Erro no login"
-        })
+        
+        showError(err.message || "Erro ao fazer login. Tente novamente!");
     }
-
 })

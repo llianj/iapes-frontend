@@ -1,79 +1,358 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./csspages/dashboard.css">
+    <link rel="stylesheet" href="./csspages/chat-modal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    <style>
+        /* Botão desmatricular */
+        .btn-desmatricular {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            background: rgba(239, 83, 80, 0.08);
+            border: 1px solid rgba(239, 83, 80, 0.35);
+            border-radius: 7px;
+            color: #ef9090;
+            font-family: 'Sora', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.18s, border-color 0.18s, color 0.18s;
+            white-space: nowrap;
+        }
+        .btn-desmatricular:hover {
+            background: rgba(239, 83, 80, 0.18);
+            border-color: #ef5350;
+            color: #ff7070;
+        }
+        .btn-desmatricular:active {
+            transform: scale(0.96);
+        }
+
+        /* Botão matricular */
+        .btn-matricular {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            background: rgba(74, 158, 255, 0.08);
+            border: 1px solid rgba(74, 158, 255, 0.35);
+            border-radius: 7px;
+            color: #7ab8ff;
+            font-family: 'Sora', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.18s, border-color 0.18s, color 0.18s;
+            white-space: nowrap;
+        }
+        .btn-matricular:hover:not(:disabled) {
+            background: rgba(74, 158, 255, 0.18);
+            border-color: #4a9eff;
+            color: #c0d8ff;
+        }
+        .btn-matricular:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            color: #7a7f9a;
+            border-color: #2a2e45;
+            background: transparent;
+        }
+    </style>
 </head>
+
 <body>
 
-    <div id="userEmail"></div>
-    <br>
-    <button id="configBtn">Meus dados</button>
-    <br>
-    <button id="logoutBtn">Sair</button>
-    <br>
-    <h3>Minhas Disciplinas</h3>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Carga Horária</th>
-                <th>Semestre</th>
-                <th>Status</th>
-                <th>Faltas</th>
-                <th>Nota</th>
-            </tr>
-        </thead>
-        <tbody id="tabelaMatriculas"></tbody>
-    </table>
+    <!-- OVERLAY (sidebar) -->
+    <div class="overlay" id="overlay"></div>
 
-    <h3>Disciplinas do Curso</h3>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Carga Horária</th>
-                <th>Semestre</th>
-                <th>Ação</th>
-            </tr>
-        </thead>
-        <tbody id="tabelaDisciplinas"></tbody>
-    </table>
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">Zéfiro</div>
+        <div class="sidebar-profile">
+            <div class="avatar">
+                <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="22" cy="16" r="8" fill="#8ab0d8"/>
+                    <ellipse cx="22" cy="36" rx="13" ry="8" fill="#8ab0d8"/>
+                </svg>
+            </div>
+            <div class="profile-name">USUARIO</div>
+            <div class="profile-code" id="userEmail"></div>
+        </div>
+        <nav class="sidebar-nav">
+            <a class="nav-item active" href="#">
+                <span class="nav-icon"><i class="fa-solid fa-house"></i></span> Home
+            </a>
+            <a class="nav-item" href="#">
+                <span class="nav-icon"><i class="fa-solid fa-clock"></i></span> Meus Horários
+            </a>
+            <a class="nav-item" href="#">
+                <span class="nav-icon"><i class="fa-brands fa-font-awesome"></i></span> Acadêmico
+            </a>
+            <a class="nav-item" href="#">
+                <span class="nav-icon"><i class="fa-solid fa-file-alt"></i></span> Requerimentos
+            </a>
+            <a class="nav-item" href="#">
+                <span class="nav-icon"><i class="fa-solid fa-money-bill"></i></span> Financeiro
+            </a>
+            <a class="nav-item" href="#">
+                <span class="nav-icon"><i class="fa-solid fa-user-graduate"></i></span> Matrícula
+            </a>
+        </nav>
+    </aside>
 
-    <button 
-        id = "chatBtn"
-        style="
-        position:fixed;
-        bottom:20px;
-        right:20px;
-        width:60px;
-        height:60px;
-    ">
-        ZÉ
+    <!-- HEADER -->
+    <div class="header">
+        <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menu">
+            <span></span><span></span><span></span>
+        </button>
+        <h1>Painel Acadêmico</h1>
+        <button id="configBtn">Meus dados</button>
+        <button id="logoutBtn">Sair</button>
+    </div>
+
+    <!-- CONTAINER -->
+    <div class="container">
+        <div class="cards">
+            <div class="info-card">
+                <h3>Disciplinas</h3>
+                <p id="statDisciplinas">—</p>
+            </div>
+            <div class="info-card">
+                <h3>Média Geral</h3>
+                <p id="statMedia">—</p>
+            </div>
+            <div class="info-card">
+                <h3>Faltas Totais</h3>
+                <p id="statFaltas">—</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Minhas Disciplinas</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th><th>Carga Horária</th><th>Semestre</th>
+                        <th>Status</th><th>Faltas</th><th>Nota</th><th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaMatriculas"></tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Disciplinas do Curso</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th><th>Carga Horária</th><th>Semestre</th><th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaDisciplinas"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- BOTÃO FLUTUANTE DO CHAT -->
+    <button class="chat-widget" id="openChatBtn" title="Abrir chat com Zé">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 2H4C2.9 2 2 2.9 2 4v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" fill="currentColor"/>
+        </svg>
     </button>
 
-    <div id="chat" style="
-        display: none;
-        position: fixed;
-        bottom: 90px;
-        right: 20px;
-        width: 280px;
-        height: 350px;
-        border: 1px solid black;
-        background: white;
-         padding: 10px;
-        ">
-             <iframe
-                src="chat.html"
-                width="100%"
-                height="100%"
-                style="border:none"
-            ></iframe>
+    <!-- CHAT MODAL -->
+    <!-- Os IDs internos (#inputChat, #inputChatBtn, #assistantChatBtn, #chat)
+         são os mesmos que chat.js espera encontrar na página -->
+    <div class="chat-modal" id="chatModal">
+
+        <!-- Header -->
+        <div class="modal-chat-header">
+            <div class="modal-bot-info">
+                <div class="modal-bot-avatar">Z</div>
+                <div>
+                    <div class="modal-bot-name">Zé, Chatbot do Zéfiro</div>
+                    <div class="modal-bot-status">Online</div>
+                </div>
+            </div>
+            <button class="modal-close-btn" id="closeChatBtn" aria-label="Fechar chat">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Área de mensagens — mesmo ID que chat.js usa: "chat" -->
+        <div id="chat" class="modal-messages"></div>
+
+        <!-- Controles — mesmos IDs que chat.js usa -->
+        <div class="modal-input-area">
+            <div id="controles" class="modal-input-row">
+                <input
+                    id="inputChat"
+                    placeholder="Digite sua mensagem..."
+                    autocomplete="off"
+                    class="modal-text-input"
+                />
+                <button id="assistantChatBtn" class="modal-reset-btn" title="Reiniciar conversa">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+                <button id="inputChatBtn" class="modal-send-btn">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16.6915 12.4745L3.50613 13.26C3.19219 13.26 3.03522 13.4171 3.03522 13.5742L1.15159 20.0151C0.837656 20.8006 0.99 21.89 1.77947 22.52C2.4 22.99 3.50613 23.1 4.134 22.843L21.7145 14.0454C22.6563 13.5742 23.1272 12.6316 22.9703 11.689L4.134 1.16346C3.34916 0.9 2.40734 1.00637 1.77947 1.47766C0.994633 2.10605 0.837664 3.04863 1.15159 3.99702L3.03522 10.438C3.03522 10.5951 3.19219 10.7522 3.50613 10.7522L16.6915 11.5377C16.6915 11.5377 17.1624 11.5377 17.1624 12.009C17.1624 12.4745 16.6915 12.4745 16.6915 12.4745Z" fill="currentColor"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
 
     </div>
 
+    <!-- SCRIPTS -->
+    <script>
+        /* Sidebar */
+        const hamburger = document.getElementById('hamburgerBtn');
+        const sidebar   = document.getElementById('sidebar');
+        const overlay   = document.getElementById('overlay');
 
+        function openSidebar()  { sidebar.classList.add('open');    overlay.classList.add('active');    hamburger.classList.add('open'); }
+        function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('active'); hamburger.classList.remove('open'); }
+
+        hamburger.addEventListener('click', () => sidebar.classList.contains('open') ? closeSidebar() : openSidebar());
+        overlay.addEventListener('click', closeSidebar);
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeSidebar(); closeChat(); } });
+
+        /* Chat Modal — garantir que modal e botão são filhos diretos do body,
+           evitando que o transform da sidebar quebre o position:fixed */
+        const chatModal    = document.getElementById('chatModal');
+        const openChatBtn  = document.getElementById('openChatBtn');
+        const closeChatBtn = document.getElementById('closeChatBtn');
+
+        // Move ambos para o body (caso não estejam já)
+        if (chatModal.parentElement !== document.body)  document.body.appendChild(chatModal);
+        if (openChatBtn.parentElement !== document.body) document.body.appendChild(openChatBtn);
+
+        function openChat() {
+            chatModal.style.display = 'flex';
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                chatModal.classList.add('active');
+            }));
+            document.getElementById('inputChat').focus();
+        }
+
+        function closeChat() {
+            chatModal.classList.remove('active');
+            setTimeout(() => { chatModal.style.display = 'none'; }, 280);
+        }
+
+        openChatBtn.addEventListener('click', openChat);
+        closeChatBtn.addEventListener('click', closeChat);
+
+        /* Fechar ao clicar fora do modal
+           Usa composedPath para cobrir cliques em elementos dinâmicos
+           criados pelo chat.js (opcao-btn, voltarMenuBtn, etc.) */
+        document.addEventListener('click', e => {
+            if (!chatModal.classList.contains('active')) return;
+            if (e.target === openChatBtn) return;
+
+            const path = e.composedPath();
+            const dentroDoModal = path.some(el => el === chatModal);
+            if (!dentroDoModal) closeChat();
+        });
+    </script>
+
+    <!-- Stats dinâmicos: observa #tabelaMatriculas e atualiza os cards -->
+    <script>
+        (function () {
+            const tbody = document.getElementById('tabelaMatriculas');
+            if (!tbody) return;
+
+            function updateStats() {
+                const rows = tbody.querySelectorAll('tr');
+                const count = rows.length;
+
+                document.getElementById('statDisciplinas').textContent = count || '0';
+
+                // Coluna de notas (índice 5) e faltas (índice 4) — ajuste se necessário
+                let totalNotas = 0, notasValidas = 0, totalFaltas = 0;
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (!cells.length) return;
+
+                    const notaCell  = cells[5]?.textContent.trim().replace(',', '.');
+                    const faltaCell = cells[4]?.textContent.trim();
+
+                    const nota  = parseFloat(notaCell);
+                    const falta = parseInt(faltaCell);
+
+                    if (!isNaN(nota))  { totalNotas += nota; notasValidas++; }
+                    if (!isNaN(falta)) { totalFaltas += falta; }
+                });
+
+                const media = notasValidas > 0
+                    ? (totalNotas / notasValidas).toFixed(1)
+                    : '—';
+
+                document.getElementById('statMedia').textContent  = media;
+                document.getElementById('statFaltas').textContent = totalFaltas || '0';
+            }
+
+            // Roda uma vez caso a tabela já tenha dados
+            updateStats();
+
+            // Observa inserções feitas pelo dashboard.js
+            new MutationObserver(updateStats)
+                .observe(tbody, { childList: true, subtree: true });
+        })();
+    </script>
+
+    <!-- MutationObserver: classifica cada <p> inserido pelo chat.js -->
+    <script>
+        (function () {
+            const chatDiv = document.getElementById('chat');
+            if (!chatDiv) return;
+
+            const classify = (p) => {
+                if (!(p instanceof HTMLElement) || p.tagName !== 'P') return;
+                if (p.dataset.classified) return;
+                p.dataset.classified = '1';
+
+                const bold = p.querySelector('b');
+                if (!bold) return;
+
+                const label = bold.textContent.trim().toLowerCase();
+                if (label.startsWith('você')) {
+                    p.classList.add('msg-user');
+                } else {
+                    p.classList.add('msg-bot');
+                }
+            };
+
+            // Classifica elementos já presentes
+            chatDiv.querySelectorAll('p').forEach(classify);
+
+            // Observa novos elementos inseridos pelo chat.js
+            const observer = new MutationObserver(mutations => {
+                mutations.forEach(m => {
+                    m.addedNodes.forEach(node => {
+                        if (node.nodeType !== 1) return;
+                        if (node.tagName === 'P') classify(node);
+                        // para casos onde o <p> é filho de um div inserido
+                        node.querySelectorAll && node.querySelectorAll('p').forEach(classify);
+                    });
+                });
+            });
+
+            observer.observe(chatDiv, { childList: true, subtree: true });
+        })();
+    </script>
+
+    <!-- chat.js controla toda a lógica de mensagens -->
+    <script type="module" src="../js/pages/chat.js"></script>
     <script type="module" src="../js/pages/dashboard.js"></script>
+
 </body>
 </html>

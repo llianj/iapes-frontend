@@ -1,0 +1,160 @@
+/* olha eu tentei replicar o design do zefiro no olhometre pra ver se fica um pouco diferente tbm - jullian */
+/* 
+1 - usar sempre porcentagens pra nao bugar o layout em outras telas (provavelmente não vai funcionar em 
+mobile kkkkk)
+2 - lembrar de tirar a borda das coisas pq provavelmente vbai bugar depois, além disso eu to so usando 
+elas por agora pra vizualizar as divs 
+*/
+
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-size: 1em;
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
+	background: #e6e6e6;
+}
+
+#container_esquerdo{
+    background-color: #e6e6e6;
+    border: 0px solid red;
+    width: 50%;
+    height: 100vh;
+    
+    float: left;
+}
+
+     
+/* lembrar de tirar a borda depois pq ela vai bugar o espaçamento depois - jullian */
+#container_direito{
+    background-color: white;
+    border: 0px solid rgb(102, 255, 0);
+    width: 50%;
+    height: 100vh;
+    text-align: center;
+    float: right;
+    
+}
+
+#container_login{
+    background-color: #e6e6e6;
+    border: 0px solid red;
+    width: 80%;
+    height: auto;
+    margin: auto;
+    padding-top: 5%;
+    padding: 5%;
+}
+
+h1{
+    font-size: 35px;
+    font-family: "russo one", sans-serif;
+    color: #4c535a;
+    font-weight: none;
+    margin-bottom: 2%;
+}
+
+.formulario_caixa{
+    width: 80%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 0px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.botao_login{
+    width: 80%;
+    background-color: #87aade;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.botao_login:hover {
+    background-color: #8fb3e7;
+    border-color: #6d91c7;
+}
+
+.botao_cadastro{
+    display: inline-block;
+    text-align: center; /*ESSE CARALHO NAO FICA NO CENTRO   */
+    margin-top: 20px;
+    color: #87aade;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.botao_cadastro:hover {
+    color: #a6c8f7;
+    text-decoration: underline;
+}
+
+#foto_login{
+    width: 90%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.textos{
+    padding-bottom: 1%;
+    padding-top: 2%;
+    font-size: 14.4px;
+    font-family: "Montoserrat", sans-serif;
+    color: #4c535a;
+}
+
+.textos2{
+    color: #4c535a;
+    padding-bottom: 1%;
+    padding-top: 2%;
+    font-size: 13px;
+    font-family: "Montoserrat", sans-serif;
+}
+
+.texto_especial{
+    border: 0px solid red;
+    font-size: 13px;
+    font-family: "montoserrat", sans-serif;
+    width: 80%;
+    height: auto;
+    color: white;
+    font-weight: bold;
+    background-color: #e74c3c;
+    border-radius: 4px;
+    margin-top: 4%;
+    margin-bottom: 4%;
+    padding: 16px;
+
+}
+
+.error-message {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 12px 20px;
+    margin: 10px 0;
+    border-radius: 4px;
+    display: none;
+    font-size: 0.95em;
+    text-align: center;
+}
+
+.error-message.show {
+    display: block;
+    animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+

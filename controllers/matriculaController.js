@@ -42,7 +42,7 @@ const cancelarMatricula = async (req, res) => {
     } catch (err) {
         if (err.code === "P2025")
             return res.status(404).json({
-                error: "Matrícula nao econtrada"
+                error: "Matrícula nao encontrada"
             })
         return res.status(500).json({
             error: "Erro ao cancelar matrícula"

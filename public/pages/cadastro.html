@@ -1,22 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
+    <title>Cadastro — IESPES</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="./csspages/cadastro.css">
 </head>
 <body>
 
-    <form id="registerForm">
-          <input type="email" id="registerEmail" placeholder="email" required><br><br>
-          <input type="password" id="registerPassword" placeholder="senha" required><br><br>
-          <button type="submit">Cadastrar</button>
-    </form>
+<div class="card">
 
-    <pre id="output"></pre>
+    <!-- LEFT -->
+    <div class="panel-left">
+        <div class="logo-wrap">
+            <img src="./assets/logo_iespes.png" alt="Logo do IESPES">
+            <div class="divider"></div>
+            <p class="tagline">Portal Acadêmico</p>
+        </div>
+        <p class="login-hint">Já tem uma conta? <a href="./login.html">Faça login</a></p>
+    </div>
 
-    <script type="module" src="../js/pages/cadastro.js"></script>
+    <!-- RIGHT -->
+    <div class="panel-right">
+        <h1 class="heading">Crie sua conta</h1>
+        <p class="sub">Preencha os dados abaixo para se cadastrar.</p>
 
+        <form id="registerForm" autocomplete="off">
+            <div class="row">
+                <div class="field">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" placeholder="Seu nome" required>
+                </div>
+                <div class="field">
+                    <label for="sobrenome">Sobrenome</label>
+                    <input type="text" id="sobrenome" placeholder="Seu sobrenome" required>
+                </div>
+            </div>
 
+            <div class="field">
+                <label for="registerEmail">E-mail</label>
+                <input type="email" id="registerEmail" placeholder="email@exemplo.com" required>
+            </div>
+
+            <div class="field">
+                <label for="registerPassword">Senha</label>
+                <input type="password" id="registerPassword" placeholder="Mínimo 8 caracteres" required>
+            </div>
+
+            <button type="submit" class="btn-submit">Cadastrar</button>
+        </form>
+    </div>
+
+</div>
+
+<pre id="output"></pre>
+<script type="module" src="../js/pages/cadastro.js"></script>
 </body>
 </html>
